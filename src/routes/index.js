@@ -7,6 +7,8 @@ const movieNotesRouter = require("./movie_notes.routes")
 
 const tagsRouter = require("./tags.routes")
 
+const sessionRoutes = require("./session.routes")
+
 const routes = Router();
 
 routes.use("/users", usersRouter);
@@ -16,6 +18,8 @@ routes.use("/movies", movieNotesRouter);
 
 
 routes.use("/tags", tagsRouter);
+
+routes.use('/session', sessionRoutes);
 
 
 module.exports = routes;

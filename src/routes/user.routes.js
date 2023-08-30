@@ -5,6 +5,14 @@ const UserController = require("../controllers/UserController");
 
 const userRoutes = Router();
 
+//Utilizaremos a biblioteca Multer para carregar essa imagem
+const multer = require("multer");
+const uploadConfig = require("../configs/upload");
+const upload = multer(uploadConfig.MULTER);
+const UserAvatarController = require("../controllers/UserAvatarController");
+
+const ensureAuthenticated = require("../middleware/ensureAuthenticated");
+
 
 function myMiddleware(request , response, next){
     console.log("Você passou pelo Middleware");
@@ -14,6 +22,7 @@ function myMiddleware(request , response, next){
 }
 //Criando o middleware
 
+const userAvatarController = new UserAvatarController();
 
 
 const userController = new UserController();
@@ -24,6 +33,9 @@ userRoutes.post("/" , myMiddleware, userController.create);
 //Usando dessa forma, eu falo que essa rota específica tem o middleware
 
 userRoutes.put("/:id", userController.update);
+
+//Aqui eu estou utilizando o patch para subir a imagem do usuário
+userRoutes.patch("/avatar", ensureAuthenticated, upload.single("avatar"), userAvatarController.update)
 
 //userRoutes.use(myMiddleware);
 //Desse jeito aqui, eu estarei fazendo com que todas as minhas rotas passem pelo middleware
