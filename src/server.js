@@ -1,3 +1,6 @@
+require("dotenv/config");
+//Aqui eu faço a importação da biblioteca dotenv para que eu tenha acesso as variáveis de ambiente
+
 require("express-async-errors")
 //Aqui importamos a biblioteca para tratar os erros
 
@@ -50,7 +53,7 @@ app.use((error , request, response, next) => {
     });
 });
 
-const PORT = 3333;
+const PORT = process.env.PORT || 3333;
 //Porta onde o express ficará observando os pedidos
 
 app.listen(PORT, () => console.log(`Server is running on Port ${PORT}`));
